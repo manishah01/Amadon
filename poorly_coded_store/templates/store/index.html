@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'amadon.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amadon</title>
+</head>
+<body>
+    <div id='wrapper'>
+        <h1>Amadon Store!</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in all_products %}
+                <tr>
+                    <form action="/receipt" method="post">
+                        {% csrf_token %}
+                        <td>{{product.description}}</td>
+                        <td><input type="hidden" name="id" value="{{product.id}}">{{product.price}}</td>
+                        <td><select name="quantity">
+                            <option value="1">1</option>              
+                            <option value="2">2</option>              
+                            <option value="3">3</option>              
+                        </select></td>
+                        <td><input type="submit" value="Buy!"></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
